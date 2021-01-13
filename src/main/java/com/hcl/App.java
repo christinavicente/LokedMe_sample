@@ -56,9 +56,8 @@ public class App
             code=sc.nextInt();
             switch(code){
                 case 1:
-                System.out.println("enter file name to be added: ");
-                temp= sc.nextLine();
-                addOne(files, temp, path, sc);
+
+                addOne(files, path, sc);
                 break;
                 case 2:
                 System.out.println("enter file name to be deleted");
@@ -121,27 +120,24 @@ public class App
 
         return files;
     }
-    private static TreeSet<String> addOne(TreeSet<String> files, String name, String path, Scanner scanner){
-        String temp; int curr;
-        if(findFile(files,name)) {
-            System.out.println("file already exists. Enter a new name [Y/N]: ");
-            temp=scanner.nextLine();
-            if(temp.startsWith("y")){
-                System.out.println("Enter new file name: ");
-                temp=scanner.nextLine();
-                addOne(files,name,path,scanner);
+    private static TreeSet<String> addOne(TreeSet<String> files,  String path, Scanner scanner){
+        String temp,name; int option,curr;
+        temp="";
+
+            System.out.println("1.)the file already exists " +
+                    "2.) a new file is created");
+            option=scanner.nextInt();
+            switch (option) {
+                case 1:
+                  System.out.println("enter path");
+                  temp=scanner.nextLine();
+                break;
+                default:
+                    System.out.println("enter file name");
+                    temp=scanner.nextLine();
+                    files.add(temp);
+                break;
             }
-        }else{
-            files.add(name);
-            System.out.println("if the file is a new file: 1");
-            System.out.println("if the file already exists in another location: 2");
-            curr=scanner.nextInt();
-            if(curr==2){
-                System.out.println("enter current path: ");
-                temp = scanner.nextLine();
-                //copy file to programs folder
-            }
-        }
         return files;
     }
 

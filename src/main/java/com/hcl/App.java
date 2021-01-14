@@ -92,7 +92,7 @@ public class App
     private static void readFiles(TreeSet<String> files){
         for(String file: files){
 
-            System.out.println(file + "\n");
+            System.out.println(file);
         }
     }
 
@@ -130,12 +130,15 @@ public class App
             switch (option) {
                 case 1:
                   System.out.println("enter path");
-                  temp=scanner.nextLine();
+                  scanner.nextLine();
+                    temp=scanner.nextLine();
                 break;
                 default:
-                    System.out.println("enter file name");
+                    System.out.print("enter file name");
+                    scanner.nextLine();
                     temp=scanner.nextLine();
                     files.add(temp);
+
                 break;
             }
         return files;

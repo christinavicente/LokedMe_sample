@@ -125,8 +125,8 @@ public class App
         return files;
     }
     private static TreeSet<String> addOne(TreeSet<String> files,  String path, Scanner scanner) throws IOException {
-        String temp,name; int option,curr;
-        temp=""; File file;
+        String temp,name; int option;
+        File file;
 
             System.out.println("1.)the file already exists \n" +
                     "2.) a new file is created");
@@ -137,7 +137,8 @@ public class App
                   scanner.nextLine();
                     temp=scanner.nextLine();
                     System.out.println(temp);
-                    name=temp.substring(temp.lastIndexOf('/')+1,temp.length());
+                    name=temp.substring(temp.lastIndexOf('/')+1);
+
                     System.out.println(name);
                     files.add(name);
                     System.out.println("done");
@@ -159,7 +160,9 @@ public class App
         return files;
     }
 
-    private static void sort(TreeSet<String> files){
+    private static void copyFile(String path){
+        System.out.println("copying file to current repository");
+        System.out.println("finished copying file");
     }
 
 }

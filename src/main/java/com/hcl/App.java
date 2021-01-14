@@ -3,6 +3,8 @@ package com.hcl;
 import sun.reflect.generics.tree.Tree;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -122,11 +124,11 @@ public class App
 
         return files;
     }
-    private static TreeSet<String> addOne(TreeSet<String> files,  String path, Scanner scanner){
+    private static TreeSet<String> addOne(TreeSet<String> files,  String path, Scanner scanner) throws IOException {
         String temp,name; int option,curr;
         temp=""; File file;
 
-            System.out.println("1.)the file already exists " +
+            System.out.println("1.)the file already exists \n" +
                     "2.) a new file is created");
             option=scanner.nextInt();
             switch (option) {
@@ -134,13 +136,23 @@ public class App
                   System.out.println("enter path");
                   scanner.nextLine();
                     temp=scanner.nextLine();
+                    System.out.println(temp);
+                    name=temp.substring(temp.lastIndexOf('/')+1,temp.length());
+                    System.out.println(name);
+                    files.add(name);
+                    System.out.println("done");
                 break;
                 default:
-                    System.out.print("enter file name");
+                    System.out.println("enter file name: ");
                     scanner.nextLine();
                     temp=scanner.nextLine();
                     files.add(temp);
-                    path=path.concat("/"+temp);
+                    path=path.concat(temp);
+                    System.out.println(path);
+                    /*File exampleFile = new File(path);
+                    if (!exampleFile.exists()) {
+                        Files.createFile(Paths.get(path));
+                    }*/
 
                 break;
             }

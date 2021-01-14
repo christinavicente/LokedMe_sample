@@ -61,11 +61,13 @@ public class App
                 break;
                 case 2:
                 System.out.println("enter file name to be deleted");
+                sc.nextLine();
                 temp=sc.nextLine();
                 removeOne(files,temp,path);
                 break;
                 case 3:
                 System.out.println("enter file to search");
+                sc.nextLine();
                 temp=sc.nextLine();
                 if(findFile(files,temp)){
                     System.out.println("file has been found");
@@ -122,7 +124,7 @@ public class App
     }
     private static TreeSet<String> addOne(TreeSet<String> files,  String path, Scanner scanner){
         String temp,name; int option,curr;
-        temp="";
+        temp=""; File file;
 
             System.out.println("1.)the file already exists " +
                     "2.) a new file is created");
@@ -138,6 +140,7 @@ public class App
                     scanner.nextLine();
                     temp=scanner.nextLine();
                     files.add(temp);
+                    path=path.concat("/"+temp);
 
                 break;
             }

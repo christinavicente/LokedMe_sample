@@ -1,0 +1,7 @@
+src/storedfiles/list.txt
+aaaa.txt
+bbbb.txt
+hello.txt
+list.txt
+test.txt
+zzzz.txt

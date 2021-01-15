@@ -15,12 +15,12 @@ public class App
 {
     public static void main( String[] args ) throws IOException{
         TreeSet<String> filenames = new TreeSet<>();
-        String listFilePath ="src/storedfiles/list";
+        String listFilePath ="src/storedfiles/list.txt";
         File listedFiles= new File(listFilePath);
         Scanner scanner=new Scanner(System.in);
         String dataPath="src/storedfiles/";
         filehandling fh= new filehandling(dataPath);
-        initTree(filenames,listedFiles,fh);
+        filenames=initTree(listedFiles,fh);
         //System.out.println("Enter path: ");
         //String path= scanner.nextLine();
         mainMenu(filenames,scanner,dataPath,fh);
@@ -101,11 +101,9 @@ public class App
         }
     }
 
-    private static TreeSet<String> initTree(TreeSet<String> files, File list,filehandling fh) throws IOException {
-        files.add("test.txt");
-        files.add("aaaa.txt");
-        files.add("zzzz.txt");
-        files.add("bbbb.txt");
+    private static TreeSet<String> initTree( File list,filehandling fh) throws IOException {
+        TreeSet<String> files=fh.createTreeSet(list);
+        readFiles(files);
         return files;
     }
 

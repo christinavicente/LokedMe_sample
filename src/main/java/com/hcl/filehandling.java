@@ -49,7 +49,7 @@ public class filehandling {
         file.delete();
     }
     public void editList(TreeSet<String> list) throws IOException {
-        String localPath=defaultPath.concat("list");
+        String localPath=defaultPath.concat("list.txt");
         StringBuilder stringBuilder=new StringBuilder(localPath);
 
         //File listOfNames=new File(localPath);
@@ -67,5 +67,33 @@ public class filehandling {
                 StandardOpenOption.WRITE
         );
 
+    }
+
+    public TreeSet<String> createTreeSet(File listfile) throws IOException {
+        String temp,fullList;
+        TreeSet<String> files= new TreeSet<String>();
+        FileInputStream fileInputStream = new FileInputStream(listfile);
+        int r = 0;int n=0;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((r = fileInputStream.read()) != -1) {
+            stringBuilder.append((char) r);
+        }
+        fullList=stringBuilder.toString();
+
+        while(fullList.indexOf('\n')!=-1){
+            //System.out.println(fullList + "Q");
+            temp=fullList.substring(n,fullList.indexOf('\n'));
+            //System.out.println(temp);
+            files.add(temp);
+            fullList=fullList.substring(fullList.indexOf('\n')+1);
+        }
+        files.add(fullList);
+        for(String file: files){
+
+            System.out.println(file);
+        }
+        System.out.println("Q");
+
+        return files;
     }
 }

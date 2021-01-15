@@ -8,15 +8,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class filehandling {
-    String defaultPath;
-    FileWriter fileWriter;
+    private String defaultPath;
+    private FileWriter fileWriter;
+    private ArrayList<String> altFileList;
     public filehandling( String pathname){
 
         defaultPath=pathname;
-
+        altFileList=new ArrayList<>(50);
     }
     public File createFile(String name) throws IOException {
         File file;
@@ -47,6 +49,9 @@ public class filehandling {
     }
     public void deleteFile(File file){
         file.delete();
+    }
+    public ArrayList<String> getArrayList(){
+        return altFileList;
     }
     public void editList(TreeSet<String> list) throws IOException {
         String localPath=defaultPath.concat("list.txt");
@@ -81,10 +86,28 @@ public class filehandling {
         while(fullList.indexOf('\n')!=-1){
             temp=fullList.substring(n,fullList.indexOf('\n'));
             files.add(temp);
+            populateArrayList(temp);
             fullList=fullList.substring(fullList.indexOf('\n')+1);
         }
         files.add(fullList);
+        populateArrayList(fullList);
 
         return files;
+    }
+    public  void populateArrayList(String item){
+        altFileList.add(item);
+    }
+    public boolean findFile( String file){
+
+        return altFileList.contains(file);
+    }
+    public void removeElement(String item){
+        int i=0;
+        while((i<altFileList.size())&&(!altFileList.get(i).equals(item))){
+            i++;
+        }
+        if(altFileList.get(i).equals(item)){
+            altFileList.remove(i);
+        }
     }
 }

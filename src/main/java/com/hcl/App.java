@@ -72,7 +72,7 @@ public class App
                 System.out.println("enter file to search");
                 sc.nextLine();
                 temp=sc.nextLine();
-                if(findFile(files,temp)){
+                if(fh.findFile(temp)){
                     System.out.println("file has been found");
                 }else {
                     System.out.println("no such file is in the directory");
@@ -94,7 +94,6 @@ public class App
     }
     private static void readFiles(TreeSet<String> files){
         for(String file: files){
-
             System.out.println(file);
         }
     }
@@ -104,22 +103,15 @@ public class App
         return files;
     }
 
-    private static boolean findFile(TreeSet<String> files, String file){
-        boolean here=false;
-        for(String location: files){
-            if(location.equals(file)){
-                here=true;
-            }
-        }
-        return here;
-    }
+
 
     private static TreeSet<String> removeOne(TreeSet<String> files, String name, String path,
                                              filehandling fh){
-        if(findFile(files, name)) {
+        if(fh.findFile(name)) {
             String filePath = path.concat(name);
             File deletedFile = new File(filePath);
             files.remove(name);
+            fh.removeElement(name);
             fh.deleteFile(deletedFile);
         }else {
             System.out.println("the file is not in the repository");
@@ -144,6 +136,7 @@ public class App
                     name=temp.substring(temp.lastIndexOf('/')+1);
                     System.out.println(name);
                     files.add(name);
+                    fh.populateArrayList(name);
                     copyFile(temp,fh,name);
                 break;
                 default:
@@ -151,6 +144,7 @@ public class App
                     scanner.nextLine();
                     temp=scanner.nextLine();
                     files.add(temp);
+                    fh.populateArrayList(temp);
                     fh.createFile(temp);
 
                 break;

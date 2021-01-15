@@ -18,14 +18,16 @@ public class App
         String listFilePath ="src/storedfiles/list";
         File listedFiles= new File(listFilePath);
         Scanner scanner=new Scanner(System.in);
-        String dataPath="reposityory/key/storedfiles/";
-        initTree(filenames,listedFiles);
+        String dataPath="src/storedfiles/";
+        filehandling fh= new filehandling(dataPath);
+        initTree(filenames,listedFiles,fh);
         //System.out.println("Enter path: ");
         //String path= scanner.nextLine();
-        mainMenu(filenames,scanner,dataPath);
+        mainMenu(filenames,scanner,dataPath,fh);
     }
 
-    public static void mainMenu(TreeSet<String> files, Scanner sc,String path) throws IOException {
+    public static void mainMenu(TreeSet<String> files, Scanner sc,
+                                String path,filehandling fh) throws IOException {
         int code;
         do {
             System.out.println("Choose option: \n 1.) see all files \n " +
@@ -37,10 +39,11 @@ public class App
                 break;
                 case 2:
                 System.out.println("loading more options");
-                moreOptions(files,sc,path);
+                moreOptions(files,sc,path,fh);
                 break;
                 case 3:
                 System.out.println("thank you! Have a good day!");
+                closing(fh,files);
                 break;
                 default:
                 System.out.println("invalid code, please enter 1,2, or 3");
@@ -48,7 +51,7 @@ public class App
         }while (code!=3);
         //closing(bw,files);
     }
-    private static void moreOptions(TreeSet<String> files, Scanner sc,String path) throws IOException {
+    private static void moreOptions(TreeSet<String> files, Scanner sc,String path, filehandling fh) throws IOException {
         String temp;
         int code;
         do {
@@ -59,13 +62,13 @@ public class App
             switch(code){
                 case 1:
 
-                addOne(files, path, sc);
+                addOne(files, path, sc, fh);
                 break;
                 case 2:
                 System.out.println("enter file name to be deleted");
                 sc.nextLine();
                 temp=sc.nextLine();
-                removeOne(files,temp,path);
+                removeOne(files,temp,path,fh);
                 break;
                 case 3:
                 System.out.println("enter file to search");
@@ -87,10 +90,8 @@ public class App
 
     }
 
-    private static void closing(BufferedWriter bw, TreeSet<String> files) throws IOException {
-        for(String file: files){
-            bw.write(file + "\n");
-        }
+    private static void closing(filehandling fh, TreeSet<String> files) throws IOException {
+        fh.editList(files);
 
     }
     private static void readFiles(TreeSet<String> files){
@@ -100,7 +101,7 @@ public class App
         }
     }
 
-    private static TreeSet<String> initTree(TreeSet<String> files, File list) throws IOException {
+    private static TreeSet<String> initTree(TreeSet<String> files, File list,filehandling fh) throws IOException {
         files.add("test.txt");
         files.add("aaaa.txt");
         files.add("zzzz.txt");
@@ -112,19 +113,21 @@ public class App
         return files.contains(file);
     }
 
-    private static TreeSet<String> removeOne(TreeSet<String> files, String name, String path){
+    private static TreeSet<String> removeOne(TreeSet<String> files, String name, String path,
+                                             filehandling fh){
         if(findFile(files, name)) {
             String filePath = path.concat(name);
             File deletedFile = new File(filePath);
             files.remove(name);
-            deletedFile.delete();
+            fh.deleteFile(deletedFile);
         }else {
-            System.out.println("the file is not in the file");
+            System.out.println("the file is not in the repository");
         }
 
         return files;
     }
-    private static TreeSet<String> addOne(TreeSet<String> files,  String path, Scanner scanner) throws IOException {
+    private static TreeSet<String> addOne(TreeSet<String> files,  String path,
+                                          Scanner scanner, filehandling fh) throws IOException {
         String temp,name; int option;
         File file;
 
@@ -138,30 +141,25 @@ public class App
                     temp=scanner.nextLine();
                     System.out.println(temp);
                     name=temp.substring(temp.lastIndexOf('/')+1);
-
                     System.out.println(name);
                     files.add(name);
-                    System.out.println("done");
+                    copyFile(temp,fh,name);
                 break;
                 default:
                     System.out.println("enter file name: ");
                     scanner.nextLine();
                     temp=scanner.nextLine();
                     files.add(temp);
-                    path=path.concat(temp);
-                    System.out.println(path);
-                    /*File exampleFile = new File(path);
-                    if (!exampleFile.exists()) {
-                        Files.createFile(Paths.get(path));
-                    }*/
+                    fh.createFile(temp);
 
                 break;
             }
         return files;
     }
 
-    private static void copyFile(String path){
+    private static void copyFile(String path,filehandling fh, String name) throws IOException {
         System.out.println("copying file to current repository");
+        fh.copyFile(path,name);
         System.out.println("finished copying file");
     }
 

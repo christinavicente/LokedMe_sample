@@ -1,7 +1,8 @@
-src/storedfiles/list.txt
+
 aaaa.txt
 bbbb.txt
 hello.txt
+hiThere.txt
 list.txt
 test.txt
 zzzz.txt

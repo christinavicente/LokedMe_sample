@@ -21,8 +21,6 @@ public class App
         String dataPath="src/storedfiles/";
         filehandling fh= new filehandling(dataPath);
         filenames=initTree(listedFiles,fh);
-        //System.out.println("Enter path: ");
-        //String path= scanner.nextLine();
         mainMenu(filenames,scanner,dataPath,fh);
     }
 
@@ -103,12 +101,17 @@ public class App
 
     private static TreeSet<String> initTree( File list,filehandling fh) throws IOException {
         TreeSet<String> files=fh.createTreeSet(list);
-        readFiles(files);
         return files;
     }
 
     private static boolean findFile(TreeSet<String> files, String file){
-        return files.contains(file);
+        boolean here=false;
+        for(String location: files){
+            if(location.equals(file)){
+                here=true;
+            }
+        }
+        return here;
     }
 
     private static TreeSet<String> removeOne(TreeSet<String> files, String name, String path,

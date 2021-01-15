@@ -50,16 +50,14 @@ public class filehandling {
     }
     public void editList(TreeSet<String> list) throws IOException {
         String localPath=defaultPath.concat("list.txt");
-        StringBuilder stringBuilder=new StringBuilder(localPath);
+        StringBuilder stringBuilder=new StringBuilder("");
 
-        //File listOfNames=new File(localPath);
         for(String item:list){
             stringBuilder=stringBuilder.append(item);
             stringBuilder= stringBuilder.append('\n');
 
         }
         String tempFile=stringBuilder.toString();
-        System.out.println(tempFile);
         Files.write(
                 Paths.get(localPath),
                 tempFile.getBytes(),
@@ -81,18 +79,11 @@ public class filehandling {
         fullList=stringBuilder.toString();
 
         while(fullList.indexOf('\n')!=-1){
-            //System.out.println(fullList + "Q");
             temp=fullList.substring(n,fullList.indexOf('\n'));
-            //System.out.println(temp);
             files.add(temp);
             fullList=fullList.substring(fullList.indexOf('\n')+1);
         }
         files.add(fullList);
-        for(String file: files){
-
-            System.out.println(file);
-        }
-        System.out.println("Q");
 
         return files;
     }

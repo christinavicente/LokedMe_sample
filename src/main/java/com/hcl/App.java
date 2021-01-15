@@ -124,22 +124,22 @@ public class App
         String temp,name; int option;
         File file;
 
-            System.out.println("1.)the file already exists \n" +
-                    "2.) a new file is created");
-            option=scanner.nextInt();
-            switch (option) {
-                case 1:
-                  System.out.println("enter path");
-                  scanner.nextLine();
-                    temp=scanner.nextLine();
-                    System.out.println(temp);
-                    name=temp.substring(temp.lastIndexOf('/')+1);
-                    System.out.println(name);
-                    files.add(name);
-                    fh.populateArrayList(name);
-                    copyFile(temp,fh,name);
-                break;
-                default:
+            //System.out.println("1.)the file already exists \n" +
+            //        "2.) a new file is created");
+            //option=scanner.nextInt();
+            //switch (option) {
+                //case 1:
+            //      System.out.println("enter path");
+            //      scanner.nextLine();
+            //        temp=scanner.nextLine();
+            //        System.out.println(temp);
+            //        name=temp.substring(temp.lastIndexOf('/')+1);
+            //        System.out.println(name);
+            //        files.add(name);
+            //        fh.populateArrayList(name);
+            //        copyFile(temp,fh,name);
+                //break;
+                //default:
                     System.out.println("enter file name: ");
                     scanner.nextLine();
                     temp=scanner.nextLine();
@@ -147,8 +147,8 @@ public class App
                     fh.populateArrayList(temp);
                     fh.createFile(temp);
 
-                break;
-            }
+                //break;
+            //}
         return files;
     }
 

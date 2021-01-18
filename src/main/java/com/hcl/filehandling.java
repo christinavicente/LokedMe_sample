@@ -12,21 +12,29 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 
 public class filehandling {
-    private String defaultPath;
+    private String defaultPath,localPath;
     private FileWriter fileWriter;
     private ArrayList<String> altFileList;
     public filehandling( String pathname){
 
         defaultPath=pathname;
+        localPath=defaultPath.concat("list.txt");
         altFileList=new ArrayList<>(50);
     }
     public File createFile(String name) throws IOException {
         File file;
         String newPath=defaultPath.concat(name);
+        String localPath=defaultPath.concat("list.txt");
         file = new File(newPath);
         if (!file.exists()) {
             Files.createFile(Paths.get(newPath));
         }
+        Files.write(
+                Paths.get(localPath),
+                name.getBytes(),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+        );
         return file;
     }
     public File copyFile(String oldPath, String name) throws IOException {
@@ -47,14 +55,24 @@ public class filehandling {
         fileWriter.write(fileInput);
         return newFile;
     }
-    public void deleteFile(File file){
+    public void deleteFile(File file, TreeSet<String> list) throws IOException {
         file.delete();
+        editList(list);
+        String temp= "\n";
+        Files.write(
+                Paths.get(localPath),
+                temp.getBytes(),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+        );
+
+
     }
     public ArrayList<String> getArrayList(){
         return altFileList;
     }
     public void editList(TreeSet<String> list) throws IOException {
-        String localPath=defaultPath.concat("list.txt");
+        //String localPath=defaultPath.concat("list.txt");
         StringBuilder stringBuilder=new StringBuilder("");
 
         for(String item:list){

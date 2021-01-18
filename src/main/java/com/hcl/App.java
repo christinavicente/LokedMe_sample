@@ -11,7 +11,7 @@ import java.util.*;
  * Hello world!
  *
  */
-public class App 
+public class App
 {
     public static void main( String[] args ) throws IOException{
         TreeSet<String> filenames = new TreeSet<>();
@@ -33,18 +33,18 @@ public class App
             code=sc.nextInt();
             switch (code){
                 case 1:
-                readFiles(files);
-                break;
+                    readFiles(files);
+                    break;
                 case 2:
-                System.out.println("loading more options");
-                moreOptions(files,sc,path,fh);
-                break;
+                    System.out.println("loading more options");
+                    moreOptions(files,sc,path,fh);
+                    break;
                 case 3:
-                System.out.println("thank you! Have a good day!");
-                closing(fh,files);
-                break;
+                    System.out.println("thank you! Have a good day!");
+                    closing(fh,files);
+                    break;
                 default:
-                System.out.println("invalid code, please enter 1,2, or 3");
+                    System.out.println("invalid code, please enter 1,2, or 3");
             }
         }while (code!=3);
         //closing(bw,files);
@@ -60,29 +60,29 @@ public class App
             switch(code){
                 case 1:
 
-                addOne(files, path, sc, fh);
-                break;
+                    addOne(files, path, sc, fh);
+                    break;
                 case 2:
-                System.out.println("enter file name to be deleted");
-                sc.nextLine();
-                temp=sc.nextLine();
-                removeOne(files,temp,path,fh);
-                break;
+                    System.out.println("enter file name to be deleted");
+                    sc.nextLine();
+                    temp=sc.nextLine();
+                    removeOne(files,temp,path,fh);
+                    break;
                 case 3:
-                System.out.println("enter file to search");
-                sc.nextLine();
-                temp=sc.nextLine();
-                if(fh.findFile(temp)){
-                    System.out.println("file has been found");
-                }else {
-                    System.out.println("no such file is in the directory");
-                }
-                break;
+                    System.out.println("enter file to search");
+                    sc.nextLine();
+                    temp=sc.nextLine();
+                    if(fh.findFile(temp)){
+                        System.out.println("file has been found");
+                    }else {
+                        System.out.println("no such file is in the directory");
+                    }
+                    break;
                 case 4:
                     System.out.println("returning to main menu");
-                break;
+                    break;
                 default:
-                System.out.println("invalid code, please enter 1,2, or 3");
+                    System.out.println("invalid code, please enter 1,2, or 3");
             }
         }while (code!=4);
 
@@ -106,13 +106,13 @@ public class App
 
 
     private static TreeSet<String> removeOne(TreeSet<String> files, String name, String path,
-                                             filehandling fh){
+                                             filehandling fh) throws IOException {
         if(fh.findFile(name)) {
             String filePath = path.concat(name);
             File deletedFile = new File(filePath);
             files.remove(name);
             fh.removeElement(name);
-            fh.deleteFile(deletedFile);
+            fh.deleteFile(deletedFile, files);
         }else {
             System.out.println("the file is not in the repository");
         }
@@ -121,34 +121,17 @@ public class App
     }
     private static TreeSet<String> addOne(TreeSet<String> files,  String path,
                                           Scanner scanner, filehandling fh) throws IOException {
-        String temp,name; int option;
-        File file;
-
-            //System.out.println("1.)the file already exists \n" +
-            //        "2.) a new file is created");
-            //option=scanner.nextInt();
-            //switch (option) {
-                //case 1:
-            //      System.out.println("enter path");
-            //      scanner.nextLine();
-            //        temp=scanner.nextLine();
-            //        System.out.println(temp);
-            //        name=temp.substring(temp.lastIndexOf('/')+1);
-            //        System.out.println(name);
-            //        files.add(name);
-            //        fh.populateArrayList(name);
-            //        copyFile(temp,fh,name);
-                //break;
-                //default:
-                    System.out.println("enter file name: ");
-                    scanner.nextLine();
-                    temp=scanner.nextLine();
-                    files.add(temp);
-                    fh.populateArrayList(temp);
-                    fh.createFile(temp);
-
-                //break;
-            //}
+        String temp;
+        System.out.println("enter file name: ");
+        scanner.nextLine();
+        temp=scanner.nextLine();
+        while(fh.findFile(temp)){
+            System.out.println("This file already exists, please enter a new name");
+            temp=scanner.nextLine();
+        }
+        files.add(temp);
+        fh.populateArrayList(temp);
+        fh.createFile(temp);
         return files;
     }
 
@@ -159,4 +142,3 @@ public class App
     }
 
 }
-
